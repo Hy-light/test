@@ -1,0 +1,41 @@
+name: A basis work flow
+
+on:
+  push:
+    branches:
+      - "master"
+  pull_request:
+    branches:
+      - "master"
+
+jobs:
+  build-app:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run a one-line script
+        run: echo "Hello, World!""
+
+      - name: Run a multi-line script
+        run: |
+          echo "Add other actions to build,"
+          echo "test, and deploy your project"
+
+  build-db:
+    runs-on: windows-latest
+    steps:
+      - run: echo "Building Api"
+
+  build-api:
+    needs: build-app
+    runs-on: windows-latest
+    steps:
+      - run: echo "Hello Windows"
+
+  package:
+    needs: [build-app, build-db]
+    runs-on: macos-latest
+    steps:
+      - run: echo "Hello MacOs"
